@@ -68,7 +68,107 @@ Front-Controller 가 사전/사후 처리를 하게 되면 중간에 매번 다�
 4. 메소드의 리턴타입도 void, String, 객체 등 다양한 타입을 사용할 수 있음.
 ```
 
-수정 중
+### servlet-context.xml 의 component-scan
 
+```txt
+Controller 클래스들을 스프링으로 인식하기 위해서는 해당 Controller 클래스가 들어있는 패키지를
+스캔해서 @Controller 어노테이션 정확히는 @Component 어노테이션이 추가된 클래스들의 객체들을
+스프링의 빈으로 설정되게 만들어야 한다.
+```
 
+```xml
+<!-- servlet-context.xml -->
+
+<context:component-scan base-package="org.zerock.springex.controller"/>
+```
+
+### @RequestMapping 와 파생 어노테이션들
+
+```txt
+스프링 컨트롤러에서 가장 많이 사용하는 어노테이션은 @RequestMapping 이다.
+@RequestMapping은 말 그대로 '특정한 경로의 요청(Request)'을 지정하기 위해서 사용한다.
+
+@RequestMapping은 컨트롤러 클래스의 선언부에도 사용할 수 있고, 컨트롤러의 메소드에서도 사용할 수 있다
+```
+
+### 스프링 MVC에서 주로 사용하는 어노테이션들
+
+```txt
+- 컨트롤러 선언부에 사용하는 어노테이션
+	- @Controller : 스프링 빈의 처리됨을 명시
+	- @RestController : REST 방식의 처리를 위한 컨트롤러임을 명시 (문자열, JSON 반환)
+	- @RequestMapping : 특정한 URL 패턴에 맞는 컨트롤러인지를 명시
+
+- 메소드 선언부에 사용하는 어노테이션
+	- @GetMapping
+	- @PostMapping
+	- @DeleteMapping
+	- @PutMapping
+		- > HTTP 전송 방식에 따라 해당 메소드를 지정하는 경우에 사용.
+
+	- @RequestMapping : GET / POST 방식 모두를 지원하는 경우에 사용
+	- @ResponeBody : REST 방식에서 사용
+
+- 메소드의 파라미터에 사용하는 어노테이션
+	- @RequestParam : Request에 있는 특정한 이름의 데이터를 파라미터로 받아서 처리하는 경우
+	- @PathVariable : URL 경로의 일부를 변수로 삼아서 처리하기 위해서 사용
+	- @ModelAttribute : 해당 파라미터는 반드시 Model에 포함되어서 다시 뷰로 전달됨을 명시
+	- @SessionAttribute, @Valid, @RequestBody
+```
+
+### Formatter를 이용한 파라미터의 커스텀 처리
+
+```txt
+기본적으로 HTTP는 문자열로 데이터를 전달하기 때문에 컨트롤러는 문자열을 기준으로 특정한 클래스의 객체로
+처리하는 작업이 진행된다.
+
+이때 개발에서 가장 문제가 되는 타입이 바로 날짜 관련 타입이다.
+
+이런 경우 특정한 날짜를 처리하는 Formatter라는 것을 이용할 수 있다.
+Formatter는 말 그대로 문자열을 포맷을 이용해서 특정한 개체로 변환하는 경우에 사용한다.
+
+예를 들어 코드를 작성해보자.
+```
+
+```java
+package org.zerock.springex.controller.formatter;  
+  
+import org.springframework.format.Formatter;  
+  
+import java.text.ParseException;  
+import java.time.LocalDate;  
+import java.time.format.DateTimeFormatter;  
+import java.util.Locale;  
+  
+public class LocalDateFormatter implements Formatter<LocalDate> {  
+  
+@Override  
+public LocalDate parse(String text, Locale locale) throws ParseException {  
+	return LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd"));  
+	}  
+  
+@Override  
+public String print(LocalDate object, Locale locale) {  
+	return DateTimeFormatter.ofPattern("yyyy-MM-dd").format(object);  
+	}  
+}
+```
+
+```txt
+만들어진 Formatter를 servlet-context.xml에 적용하기 위해서는 조금 복잡한 과정이 필요하다.
+```
+
+```xml
+<!-- servlet-context.xml -->
+
+<mvc:annotation-driven conversion-service="conversionService" />
+
+<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">  
+<property name="formatters">  
+<set>  
+<bean class="org.zerock.springex.controller.formatter.LocalDateFormatter"/>  
+</set>  
+</property>  
+</bean>
+```
 
