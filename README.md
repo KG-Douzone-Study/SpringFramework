@@ -51,6 +51,19 @@ STS를 이용하여 스프링 MVC 프로젝트를 생성하면 JDK 버전은 1.6
 
 ![스크린샷 2023-05-30 오후 2 43 49](https://github.com/whochucompany/ByteClone-BE/assets/96435200/1b123fc2-9f67-4423-aa8e-d3e6c8239573)
 
+```txt
+그리고 pom.xml에서 java-version을 11로 변경하자.
+```
+
+![스크린샷 2023-06-02 오전 9 23 05](https://github.com/whochucompany/ByteClone-BE/assets/96435200/df365f59-93cf-4a01-9a9d-9cc53ff4fa8d)
+
+```txt
+  plugins 하위 artifactId가 maven-compier-plugin 을 찾은 뒤 그 하위 source와 target을 ${java-version}으로 변경하자.
+  ${java-version}으로 설정해놓으면 설정한 java-version을 그대로 따라가므로 11로 변경하든 16으로 변경하든 동일한 자바 버전을 따른다.
+```
+
+![스크린샷 2023-06-02 오전 9 27 57](https://github.com/whochucompany/ByteClone-BE/assets/96435200/0593eaba-0557-4f02-b454-387954663fb4)
+
 ![스크린샷 2023-05-30 오후 2 44 50](https://github.com/whochucompany/ByteClone-BE/assets/96435200/1a3f1584-969a-481c-8700-e3ebc5f8d90c)
 
 
