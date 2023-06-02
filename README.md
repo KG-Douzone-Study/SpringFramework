@@ -62,7 +62,7 @@ STS를 이용하여 스프링 MVC 프로젝트를 생성하면 JDK 버전은 1.6
   ${java-version}으로 설정해놓으면 설정한 java-version을 그대로 따라가므로 11로 변경하든 16으로 변경하든 동일한 자바 버전을 따른다.
 ```
 
-![스크린샷 2023-06-02 오전 9 27 57](https://github.com/whochucompany/ByteClone-BE/assets/96435200/0593eaba-0557-4f02-b454-387954663fb4)
+![스크린샷 2023-06-02 오전 9 32 10](https://github.com/whochucompany/ByteClone-BE/assets/96435200/cbcb8fce-03c1-415a-884a-7845d5551d69)
 
 ![스크린샷 2023-05-30 오후 2 44 50](https://github.com/whochucompany/ByteClone-BE/assets/96435200/1a3f1584-969a-481c-8700-e3ebc5f8d90c)
 
