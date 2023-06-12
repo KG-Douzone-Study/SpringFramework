@@ -114,3 +114,44 @@ axios 설치하기가 귀찮으니 fetch api를 사용하겠다.
 ---
 
 #### POST 요청 (내일 수정)
+
+일단 컨트롤러의 @PostMapping("/register") 쪽을 수정하자.
+
+![스크린샷 2023-06-12 오전 10 47 27](https://github.com/ParkRio/MegaKGCoffee/assets/96435200/a4f050f5-1431-4722-af6e-ff9ffaa945a4)
+
+```txt
+이전에는 파라미터에 @ReqeustBody가 없었다.
+
+! @ReqeustBody vs @ModelAttribute !
+
+- @RequestBody 어노테이션의 역할은 클라이언트가 보내는 HTTP 요청 본문 (JSON 및 XML등)을
+  Java 객체로 변환하는 것이다.
+  HTTP 요청 본문 데이터는 Spring에서 제공하는 HttpMessageConverter를 통해 타입에 맞는 객체로
+  변환된다.
+  
+  @RequestBody를 사용할 객체는 필드를 바인딩할 생성자나 setter 메서드가 필요없다.
+  - 다만 직렬화를 위해 기본 생성자는 필수다.
+  - 또한 데이터 바인딩을 위한 필드명을 알아내기 위해 getter나 setter 중 1가지는 정의되어 있어야한다.
+
+- @ModelAttribute 어노테이션의 역할은 클라이언트가 보내는 HTTP 파라미터들을 특정 Java 객체에
+  바인딩하는 것이다.
+  예를 들어 /register?title=rio&writer=rio1 같은 Query String 형태 혹은 요청 본문에
+  삽입되는 Form 형태의 데이터를 처리한다.
+  
+  - 객체의 필드에 접근해 데이터를 바인딩할 수 있는 생성자 혹은 setter 메서드가 필요하다.
+  - Query String 및 Form 형식이 아닌 데이터는 처리할 수 없다.
+```
+
+
+![스크린샷 2023-06-12 오전 10 55 41](https://github.com/ParkRio/MegaKGCoffee/assets/96435200/edf6e933-9937-436d-a67e-f693d20929dd)
+
+![스크린샷 2023-06-12 오전 10 56 20](https://github.com/ParkRio/MegaKGCoffee/assets/96435200/7be946f4-17f6-4ae1-9f2d-28cf3eeae5c0)
+
+![스크린샷 2023-06-12 오전 10 57 14](https://github.com/ParkRio/MegaKGCoffee/assets/96435200/3fb0671e-8b0c-4acf-ade8-945851dac9ce)
+
+![스크린샷 2023-06-12 오전 10 57 31](https://github.com/ParkRio/MegaKGCoffee/assets/96435200/e9459ddb-9e64-4a86-8125-29e3417c05ce)
+
+![스크린샷 2023-06-12 오전 10 58 19](https://github.com/ParkRio/MegaKGCoffee/assets/96435200/9df9fd2b-c5da-4952-818d-0a46b33786ae)
+
+
+데이터가 잘 넘어와 저장되는 것을 확인할 수 있다.
